@@ -1,0 +1,120 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: MyProject Deployment Pipeline
+Parameters:
+  GitHubToken:
+    Type: String
+    Description: GitHub repository OAuth token
+  EnvironmentName:
+    Type: String
+    Description: The name of the environment
+  Organisation:
+    Type: String
+    Description: The organisation the repo belongs to
+  Repository:
+    Type: String
+    Description: The repo to deploy
+  Branch:
+    Type: String
+    Description: The branch to deploy
+Resources:
+
+  ArtifactBucket:
+    Type: AWS::S3::Bucket
+
+  Pipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      Name: JobCreatorPipeline
+      RoleArn: !GetAtt [PipelineRole, Arn]
+      ArtifactStore: 
+        Type: S3
+        Location: !Ref ArtifactBucket
+      Stages:
+        - Name: Source
+          Actions:
+          - Name: Source
+            ActionTypeId:
+              Category: Source
+              Owner: ThirdParty
+              Provider: GitHub
+              Version: 1
+            RunOrder: 1
+            Configuration:
+              Branch: !Ref Branch
+              OAuthToken: !Ref GitHubToken
+              Owner: !Ref Organisation
+              PollForSourceChanges: false
+              Repo: !Ref Repository
+            OutputArtifacts:
+            - Name: SourceArtifact
+            InputArtifacts: []
+        - Name: Build
+          Actions:
+          - Name: Build
+            ActionTypeId:
+              Category: Build
+              Owner: AWS
+              Provider: CodeBuild
+              Version: 1
+            RunOrder: 1
+            Configuration:
+              ProjectName: !Ref JobCreatorCodeBuildProject
+            InputArtifacts:
+            - Name: SourceArtifact
+              
+  PipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal:
+            Service: [codepipeline.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodePipelineAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                - 's3:*'
+                - 'codebuild:StartBuild'
+                - 'iam:PassRole'
+                - 'sns:Publish'
+                Effect: Allow
+                Resource: '*'
+  
+  JobCreatorCodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: JobCreatorCodeBuildProject
+      Description: Does stuff
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/python:3.6.5
+        # EnvironmentVariables:
+        # - Name: varName
+        #   Value: varValue
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 10
+
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: codebuild.amazonaws.com
+          Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
