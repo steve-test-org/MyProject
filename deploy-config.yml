@@ -1,5 +1,6 @@
-defaults:
-  container_image: aws/codebuild/python:3.6.5
 
-dev01:
-  source: master
+Environments:
+  dev01:
+    source: master
+  dev02:
+    source: master
