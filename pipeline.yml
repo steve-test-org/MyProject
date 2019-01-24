@@ -28,7 +28,6 @@ Resources:
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
-      Name: JobCreatorPipeline
       RoleArn: !GetAtt [PipelineRole, Arn]
       ArtifactStore: 
         Type: S3
@@ -93,7 +92,6 @@ Resources:
   JobCreatorCodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: JobCreatorCodeBuildProject
       Description: Does stuff
       ServiceRole: !GetAtt CodeBuildRole.Arn
       Artifacts:
