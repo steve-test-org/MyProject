@@ -5,6 +5,9 @@ Parameters:
   GitHubToken:
     Type: String
     Description: GitHub repository OAuth token
+  AccountID:
+    Type: String
+    Description: The name of the environment
   EnvironmentName:
     Type: String
     Description: The name of the environment
@@ -99,9 +102,11 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/python:3.6.5
-        # EnvironmentVariables:
-        # - Name: varName
-        #   Value: varValue
+        EnvironmentVariables:
+        - Name: EnvironmentName
+          Value: EnvironmentName
+        - Name: AccountID
+          Value: AccountID
       Source:
         Type: CODEPIPELINE
       TimeoutInMinutes: 10
