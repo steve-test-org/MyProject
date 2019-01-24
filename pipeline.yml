@@ -20,10 +20,10 @@ Parameters:
   Branch:
     Type: String
     Description: The branch to deploy
-Resources:
-
   ArtifactBucket:
-    Type: AWS::S3::Bucket
+    Type: String
+    Description: The branch to deploy
+Resources:
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
