@@ -1,0 +1,15 @@
+---
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip install sceptre
+  # pre_build:
+  #   commands:
+  #     - mkdir -p ./cbsample-$build_version/DEBIAN
+  build:
+    commands:
+      - echo "Building..."
+      # - cd sceptre
+      # - sceptre --var env=${ENV} create dev/vpc.yaml -y

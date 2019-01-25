@@ -1,0 +1,12 @@
+---
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip install sceptre
+  build:
+    commands:
+      - echo "Destroying..."
+      # - cd sceptre
+      # - sceptre --var env=${ENV} delete dev/vpc.yaml -y

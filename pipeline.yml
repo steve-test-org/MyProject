@@ -107,6 +107,7 @@ Resources:
           Value: AccountID
       Source:
         Type: CODEPIPELINE
+        BuildSpec: build/buildspec.yml
       TimeoutInMinutes: 10
 
   CodeBuildRole:
