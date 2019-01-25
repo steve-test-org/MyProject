@@ -86,6 +86,7 @@ Resources:
                 - 'codebuild:StartBuild'
                 - 'iam:PassRole'
                 - 'sns:Publish'
+                - 'codebuild:batchGetBuilds'
                 Effect: Allow
                 Resource: '*'
   
