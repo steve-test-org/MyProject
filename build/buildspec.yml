@@ -8,6 +8,6 @@ phases:
   build:
     commands:
       - echo "Building..."
-      - ENV | grep AccountID
-      - ENV | grep EnvironmentName
+      - echo $AccountID
+      - echo $EnvironmentName
       # - sceptre --var env=${ENV} create dev/vpc.yaml -y
