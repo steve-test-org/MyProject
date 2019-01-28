@@ -5,11 +5,9 @@ phases:
   install:
     commands:
       - pip install sceptre
-  # pre_build:
-  #   commands:
-  #     - mkdir -p ./cbsample-$build_version/DEBIAN
   build:
     commands:
       - echo "Building..."
-      # - cd sceptre
+      - ENV | grep AccountID
+      - ENV | grep EnvironmentName
       # - sceptre --var env=${ENV} create dev/vpc.yaml -y

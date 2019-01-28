@@ -8,5 +8,4 @@ phases:
   build:
     commands:
       - echo "Destroying..."
-      # - cd sceptre
       # - sceptre --var env=${ENV} delete dev/vpc.yaml -y
