@@ -7,5 +7,5 @@ Environments:
     source: master
     account: 985643581978
   prod:
-    source: releases/tag/0.0.1
+    source: refs/tags/0.0.1
     account: 985643581978
