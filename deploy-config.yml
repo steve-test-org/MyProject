@@ -3,6 +3,3 @@ Environments:
   dev01:
     source: master
     account: 985643581978
-  dev02:
-    source: master
-    account: 985643581978
