@@ -2,9 +2,9 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - pip install sceptre
+  # install:
+  #   commands:
+  #     - pip install sceptre
   build:
     commands:
       - echo "Building..."

@@ -24,7 +24,7 @@ def get_body(env):
                 "width": 21,
                 "height": 15,
                 "properties": {
-                    "markdown": f"\n# {env}\n\n\n\n![alt text](https://htmlcolors.com/color-image/{COLOR}png)\n"
+                    "markdown": f"\n# {env}\n\n\n\n![alt text](https://htmlcolors.com/color-image/{COLOR}.png)\n"
                 }
             }
         ]
