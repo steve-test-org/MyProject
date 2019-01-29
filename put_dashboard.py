@@ -2,7 +2,7 @@ import os
 import json
 import boto3
 
-COLOR = '00ff00'
+COLOR = 'ff0000'
 
 
 def main():
