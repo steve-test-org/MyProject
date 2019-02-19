@@ -3,3 +3,6 @@ Environments:
   dev01:
     source: master
     account: 985643581978
+  test01:
+    source: feature/new_colour
+    account: 985643581978
